@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
         if (image && !image.startsWith('http')) {
             try {
                 image = new URL(image, url).toString()
-            } catch (e) {
+            } catch {
                 // Keep original if resolution fails
             }
         }

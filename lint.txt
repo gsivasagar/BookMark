@@ -1,0 +1,61 @@
+
+> smart-bookmark-app@0.1.0 lint
+> eslint
+
+
+/Users/sivasagar/workspace/projects/abstrabit technologies/Smart BookMark/smart-bookmark-app/app/api/preview/route.ts
+  57:22  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/sivasagar/workspace/projects/abstrabit technologies/Smart BookMark/smart-bookmark-app/app/page.tsx
+  3:10  warning  'signOut' is defined but never used         @typescript-eslint/no-unused-vars
+  5:8   warning  'DashboardShell' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/sivasagar/workspace/projects/abstrabit technologies/Smart BookMark/smart-bookmark-app/components/BookmarkCard.tsx
+   38:12  warning  'loadingPreview' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   47:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/sivasagar/workspace/projects/abstrabit technologies/Smart BookMark/smart-bookmark-app/components/BookmarkCard.tsx:47:13
+  45 |         const cached = sessionStorage.getItem(cacheKey)
+  46 |         if (cached) {
+> 47 |             setPreview(JSON.parse(cached))
+     |             ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  48 |             return
+  49 |         }
+  50 |  react-hooks/set-state-in-effect
+   91:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @next/next/no-img-element
+  145:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @next/next/no-img-element
+
+/Users/sivasagar/workspace/projects/abstrabit technologies/Smart BookMark/smart-bookmark-app/components/BookmarkManager.tsx
+   6:27  warning  'ChevronRightIcon' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+   7:21  warning  'PencilIcon' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  53:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/sivasagar/workspace/projects/abstrabit technologies/Smart BookMark/smart-bookmark-app/components/BookmarkManager.tsx:53:9
+  51 |
+  52 |     useEffect(() => {
+> 53 |         fetchBookmarks()
+     |         ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  54 |     }, [fetchBookmarks])
+  55 |
+  56 |     useEffect(() => {  react-hooks/set-state-in-effect
+  96:18  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+
+/Users/sivasagar/workspace/projects/abstrabit technologies/Smart BookMark/smart-bookmark-app/components/DashboardShell.tsx
+    5:20  warning  'FolderIcon' is defined but never used                                 @typescript-eslint/no-unused-vars
+   85:82  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  107:86  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+
+✖ 14 problems (2 errors, 12 warnings)
+

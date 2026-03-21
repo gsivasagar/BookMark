@@ -2,7 +2,7 @@ import { useState, Fragment } from 'react'
 import { User } from '@supabase/supabase-js'
 import { signOut } from '@/app/actions'
 import Image from 'next/image'
-import { HomeIcon, FolderIcon, ArrowRightOnRectangleIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { HomeIcon, ArrowRightOnRectangleIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Dialog, Transition } from '@headlessui/react'
 
 type DashboardShellProps = {
@@ -82,7 +82,7 @@ export default function DashboardShell({ user, children, categories = [], curren
                                                     {navigation.map((item) => (
                                                         <li key={item.name}>
                                                             <button
-                                                                onClick={() => { onCategoryChange && onCategoryChange(item.id); setSidebarOpen(false); }}
+                                                                onClick={() => { if (onCategoryChange) onCategoryChange(item.id); setSidebarOpen(false); }}
                                                                 className={`
                                                                     group flex w-full gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors
                                                                     ${currentCategory === item.id
@@ -104,7 +104,7 @@ export default function DashboardShell({ user, children, categories = [], curren
                                                         {categories.map((category) => (
                                                             <li key={category}>
                                                                 <button
-                                                                    onClick={() => { onCategoryChange && onCategoryChange(category); setSidebarOpen(false); }}
+                                                                    onClick={() => { if (onCategoryChange) onCategoryChange(category); setSidebarOpen(false); }}
                                                                     className={`
                                                                         group flex w-full gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors
                                                                         ${currentCategory === category
@@ -176,7 +176,7 @@ export default function DashboardShell({ user, children, categories = [], curren
                                     {navigation.map((item) => (
                                         <li key={item.name}>
                                             <button
-                                                onClick={() => onCategoryChange && onCategoryChange(item.id)}
+                                                onClick={() => { if (onCategoryChange) onCategoryChange(item.id); }}
                                                 className={`
                                                     group flex w-full gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors
                                                     ${currentCategory === item.id
@@ -198,7 +198,7 @@ export default function DashboardShell({ user, children, categories = [], curren
                                         {categories.map((category) => (
                                             <li key={category}>
                                                 <button
-                                                    onClick={() => onCategoryChange && onCategoryChange(category)}
+                                                    onClick={() => { if (onCategoryChange) onCategoryChange(category); }}
                                                     className={`
                                                         group flex w-full gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors
                                                         ${currentCategory === category

@@ -3,8 +3,8 @@
 import { createClient } from "@/lib/supabase/client"
 import { useEffect, useState, useCallback } from "react"
 import { User } from '@supabase/supabase-js'
-import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
-import { TrashIcon, PencilIcon, XMarkIcon, CheckCircleIcon, ExclamationCircleIcon, FolderIcon } from '@heroicons/react/24/outline'
+import { ChevronDownIcon } from '@heroicons/react/24/solid'
+import { TrashIcon, XMarkIcon, CheckCircleIcon, ExclamationCircleIcon, FolderIcon } from '@heroicons/react/24/outline'
 import DashboardShell from '@/components/DashboardShell'
 import BookmarkCard from '@/components/BookmarkCard'
 import { Bookmark } from '@/types'
@@ -50,7 +50,10 @@ export default function BookmarkManager({ user }: { user: User }) {
     }, [supabase])
 
     useEffect(() => {
-        fetchBookmarks()
+        const load = async () => {
+            await fetchBookmarks()
+        }
+        load()
     }, [fetchBookmarks])
 
     useEffect(() => {
@@ -93,7 +96,7 @@ export default function BookmarkManager({ user }: { user: User }) {
         try {
             new URL(urlString);
             return true;
-        } catch (e) {
+        } catch {
             return false;
         }
     }
@@ -125,12 +128,16 @@ export default function BookmarkManager({ user }: { user: User }) {
             setBookmarks((prev) => prev.filter(b => b.id !== tempId))
             setNotification({ message: "Failed to add bookmark", type: 'error' })
         } else if (data) {
-            setBookmarks((prev) => prev.map(b => b.id === tempId ? data[0] : b))
+            setBookmarks((prev) => {
+                const list = prev.map(b => b.id === tempId ? (data[0] as Bookmark) : b);
+                return list.filter((v, i, a) => a.findIndex(t => t.id === v.id) === i);
+            });
         }
 
         setTitle('')
         setUrl('')
         setCategory('')
+        setShowCategory(false)
     }
 
     const deleteBookmark = async (id: string) => {

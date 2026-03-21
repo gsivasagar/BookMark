@@ -1,4 +1,4 @@
-
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -35,7 +35,6 @@ export default function BookmarkCard({
     onDelete
 }: BookmarkCardProps) {
     const [preview, setPreview] = useState<{ image?: string, title?: string, description?: string } | null>(null)
-    const [loadingPreview, setLoadingPreview] = useState(false)
 
     useEffect(() => {
         if (!bookmark.url) return;
@@ -44,11 +43,10 @@ export default function BookmarkCard({
         const cacheKey = `preview-${bookmark.url}`
         const cached = sessionStorage.getItem(cacheKey)
         if (cached) {
-            setPreview(JSON.parse(cached))
+            setTimeout(() => setPreview(JSON.parse(cached)), 0)
             return
         }
 
-        setLoadingPreview(true)
         fetch(`/api/preview?url=${encodeURIComponent(bookmark.url)}`)
             .then(res => res.json())
             .then(data => {
@@ -63,16 +61,24 @@ export default function BookmarkCard({
                 }
             })
             .catch(err => console.error('Preview error', err))
-            .finally(() => setLoadingPreview(false))
     }, [bookmark.url])
 
     const b = bookmark
 
+    const handleCardClick = (e: React.MouseEvent) => {
+        if (isEditing) return;
+        const target = e.target as HTMLElement;
+        if (target.closest('button') || target.closest('input') || target.closest('a')) return;
+        window.open(b.url, '_blank', 'noopener,noreferrer');
+    }
+
     return (
         <div
+            onClick={handleCardClick}
             className={`
                 group relative flex flex-col overflow-hidden rounded-xl bg-gray-800 ring-1 ring-inset ring-white/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:bg-gray-800/80
                 ${isSelected ? 'ring-2 ring-indigo-500 bg-gray-800/50' : ''}
+                ${!isEditing ? 'cursor-pointer' : ''}
             `}
         >
             {/* Preview Image or Fallback */}
